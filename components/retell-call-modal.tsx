@@ -1,0 +1,308 @@
+"use client"
+
+import { useState, useEffect, useCallback } from "react"
+import { RetellWebClient } from "retell-client-js-sdk"
+import { X, Phone, PhoneOff, Mic, MicOff, Loader2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+
+interface RetellCallModalProps {
+  isOpen: boolean
+  onClose: () => void
+}
+
+type CallStatus = "idle" | "connecting" | "connected" | "ended" | "error"
+
+export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
+  const [callStatus, setCallStatus] = useState<CallStatus>("idle")
+  const [isMuted, setIsMuted] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [retellClient, setRetellClient] = useState<RetellWebClient | null>(null)
+  const [isAgentTalking, setIsAgentTalking] = useState(false)
+
+  // Initialize Retell client on mount
+  useEffect(() => {
+    const client = new RetellWebClient()
+    setRetellClient(client)
+
+    return () => {
+      client.stopCall()
+    }
+  }, [])
+
+  // Set up event listeners
+  useEffect(() => {
+    if (!retellClient) return
+
+    const handleCallStarted = () => {
+      console.log("[v0] Retell call started")
+      setCallStatus("connected")
+    }
+
+    const handleCallEnded = () => {
+      console.log("[v0] Retell call ended")
+      setCallStatus("ended")
+    }
+
+    const handleError = (error: Error) => {
+      console.log("[v0] Retell error:", error)
+      setErrorMessage(error.message || "An error occurred during the call")
+      setCallStatus("error")
+    }
+
+    const handleAgentStartTalking = () => {
+      setIsAgentTalking(true)
+    }
+
+    const handleAgentStopTalking = () => {
+      setIsAgentTalking(false)
+    }
+
+    retellClient.on("call_started", handleCallStarted)
+    retellClient.on("call_ended", handleCallEnded)
+    retellClient.on("error", handleError)
+    retellClient.on("agent_start_talking", handleAgentStartTalking)
+    retellClient.on("agent_stop_talking", handleAgentStopTalking)
+
+    return () => {
+      retellClient.off("call_started", handleCallStarted)
+      retellClient.off("call_ended", handleCallEnded)
+      retellClient.off("error", handleError)
+      retellClient.off("agent_start_talking", handleAgentStartTalking)
+      retellClient.off("agent_stop_talking", handleAgentStopTalking)
+    }
+  }, [retellClient])
+
+  const startCall = useCallback(async () => {
+    if (!retellClient) return
+
+    setCallStatus("connecting")
+    setErrorMessage(null)
+
+    try {
+      // Call our API to create a web call and get an access token
+      const response = await fetch("/api/retell/create-web-call", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to create web call")
+      }
+
+      const data = await response.json()
+      
+      // Start the call with the access token
+      await retellClient.startCall({
+        accessToken: data.access_token,
+        sampleRate: 24000,
+      })
+    } catch (error) {
+      console.log("[v0] Error starting call:", error)
+      setErrorMessage(error instanceof Error ? error.message : "Failed to start call")
+      setCallStatus("error")
+    }
+  }, [retellClient])
+
+  const endCall = useCallback(() => {
+    if (retellClient) {
+      retellClient.stopCall()
+    }
+    setCallStatus("ended")
+  }, [retellClient])
+
+  const toggleMute = useCallback(() => {
+    if (retellClient && callStatus === "connected") {
+      if (isMuted) {
+        retellClient.unmute()
+      } else {
+        retellClient.mute()
+      }
+      setIsMuted(!isMuted)
+    }
+  }, [retellClient, callStatus, isMuted])
+
+  const handleClose = useCallback(() => {
+    if (callStatus === "connected") {
+      endCall()
+    }
+    setCallStatus("idle")
+    setErrorMessage(null)
+    setIsMuted(false)
+    onClose()
+  }, [callStatus, endCall, onClose])
+
+  const handleStartNewCall = useCallback(() => {
+    setCallStatus("idle")
+    setErrorMessage(null)
+    setIsMuted(false)
+  }, [])
+
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+        onClick={handleClose}
+      />
+
+      {/* Modal */}
+      <div className="relative bg-card border border-border rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b border-border">
+          <h2 className="text-lg font-semibold text-foreground">Talk to Beacon Admit</h2>
+          <button
+            onClick={handleClose}
+            className="p-2 rounded-lg hover:bg-muted transition-colors"
+          >
+            <X className="w-5 h-5 text-muted-foreground" />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="p-6">
+          {callStatus === "idle" && (
+            <div className="text-center">
+              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                <Phone className="w-10 h-10 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">
+                Experience Our AI Admissions Agent
+              </h3>
+              <p className="text-muted-foreground mb-6">
+                Click below to start a conversation with our demo AI admissions coordinator. See how it handles intake questions and gathers information.
+              </p>
+              <Button size="lg" onClick={startCall} className="w-full gap-2">
+                <Phone className="w-4 h-4" />
+                Start Call
+              </Button>
+            </div>
+          )}
+
+          {callStatus === "connecting" && (
+            <div className="text-center py-8">
+              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                <Loader2 className="w-10 h-10 text-primary animate-spin" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">
+                Connecting...
+              </h3>
+              <p className="text-muted-foreground">
+                Please allow microphone access when prompted
+              </p>
+            </div>
+          )}
+
+          {callStatus === "connected" && (
+            <div className="text-center">
+              <div 
+                className={cn(
+                  "w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-300",
+                  isAgentTalking 
+                    ? "bg-primary/20 ring-4 ring-primary/30 scale-110" 
+                    : "bg-primary/10"
+                )}
+              >
+                <Phone className="w-12 h-12 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">
+                Call in Progress
+              </h3>
+              <p className="text-sm text-muted-foreground mb-6">
+                {isAgentTalking ? "Agent is speaking..." : "Listening..."}
+              </p>
+
+              <div className="flex items-center justify-center gap-4">
+                <Button
+                  variant={isMuted ? "destructive" : "outline"}
+                  size="lg"
+                  onClick={toggleMute}
+                  className="gap-2"
+                >
+                  {isMuted ? (
+                    <>
+                      <MicOff className="w-4 h-4" />
+                      Unmute
+                    </>
+                  ) : (
+                    <>
+                      <Mic className="w-4 h-4" />
+                      Mute
+                    </>
+                  )}
+                </Button>
+                <Button
+                  variant="destructive"
+                  size="lg"
+                  onClick={endCall}
+                  className="gap-2"
+                >
+                  <PhoneOff className="w-4 h-4" />
+                  End Call
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {callStatus === "ended" && (
+            <div className="text-center">
+              <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mx-auto mb-6">
+                <PhoneOff className="w-10 h-10 text-muted-foreground" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">
+                Call Ended
+              </h3>
+              <p className="text-muted-foreground mb-6">
+                Thank you for trying our demo. Ready to see how Beacon Admit can work for your facility?
+              </p>
+              <div className="flex flex-col gap-3">
+                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2">
+                  <Phone className="w-4 h-4" />
+                  Start Another Call
+                </Button>
+                <Button variant="outline" size="lg" onClick={handleClose} className="w-full" asChild>
+                  <a href="#demo">Book a Full Demo</a>
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {callStatus === "error" && (
+            <div className="text-center">
+              <div className="w-20 h-20 rounded-full bg-destructive/10 flex items-center justify-center mx-auto mb-6">
+                <X className="w-10 h-10 text-destructive" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">
+                Connection Error
+              </h3>
+              <p className="text-muted-foreground mb-6">
+                {errorMessage || "Unable to connect to the AI agent. Please try again."}
+              </p>
+              <div className="flex flex-col gap-3">
+                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2">
+                  <Phone className="w-4 h-4" />
+                  Try Again
+                </Button>
+                <Button variant="outline" size="lg" onClick={handleClose} className="w-full">
+                  Close
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Footer note */}
+        <div className="px-6 pb-4">
+          <p className="text-xs text-muted-foreground text-center">
+            This is a demo AI agent. For actual admissions support, please contact the facility directly.
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}

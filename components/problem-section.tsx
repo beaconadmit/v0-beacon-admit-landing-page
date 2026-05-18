@@ -1,0 +1,61 @@
+import { 
+  PhoneMissed, 
+  Clock, 
+  FileQuestion, 
+  FileText, 
+  Users, 
+  MessageSquareOff,
+  AlertTriangle
+} from "lucide-react"
+
+const problems = [
+  { icon: PhoneMissed, text: "Missed after-hours calls" },
+  { icon: Clock, text: "Delayed follow-up on web forms" },
+  { icon: FileQuestion, text: "Inconsistent intake questions" },
+  { icon: FileText, text: "No structured call summary" },
+  { icon: Users, text: "Admissions staff wasting time on unqualified leads" },
+  { icon: MessageSquareOff, text: "No automated SMS follow-up" },
+  { icon: AlertTriangle, text: "No clear escalation path for urgent situations" },
+]
+
+export function ProblemSection() {
+  return (
+    <section id="problem" className="py-20 lg:py-32 bg-card/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground text-balance">
+            Your Next Admission Often Calls When Your Team Is Busy, Closed, or Understaffed
+          </h2>
+          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+            Small and mid-sized behavioral health programs cannot always staff a full 24/7 admissions department. But families, referral partners, and prospective clients do not wait until business hours. They call when the crisis is happening.
+          </p>
+          <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
+            When nobody answers — or when follow-up is delayed — that inquiry may call another center, go to a competitor, or never reach treatment.
+          </p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          {problems.map((problem, index) => (
+            <div 
+              key={index}
+              className="flex items-center gap-3 p-4 rounded-xl bg-background border border-border hover:border-primary/30 transition-colors"
+            >
+              <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center flex-shrink-0">
+                <problem.icon className="w-5 h-5 text-destructive" />
+              </div>
+              <span className="text-sm text-foreground">{problem.text}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <div className="inline-block p-6 rounded-2xl bg-primary/5 border border-primary/20">
+            <p className="text-xl font-semibold text-foreground">
+              Beacon Admit helps you respond like a larger admissions department without hiring one.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
