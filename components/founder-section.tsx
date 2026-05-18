@@ -2,22 +2,22 @@ import { Lightbulb } from "lucide-react"
 
 export function FounderSection() {
   return (
-    <section className="py-20 lg:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+    <section className="py-16 lg:py-24">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground text-balance">
+            <h2 className="text-[clamp(1.75rem,4vw,2.25rem)] font-semibold text-foreground leading-[1.2] text-balance">
               Built by Operators Who Understand Behavioral Health Admissions
             </h2>
-            <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            <p className="mt-6 text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Beacon Admit was created by a team with hands-on experience in behavioral health operations, substance use treatment admissions, and startup treatment center consulting.
             </p>
           </div>
 
-          <div className="bg-card border border-border rounded-2xl p-8 lg:p-12">
+          <div className="bg-card border border-border rounded-xl p-8 lg:p-10">
             <div className="flex items-start gap-6">
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <Lightbulb className="w-8 h-8 text-primary" />
+              <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+                <Lightbulb className="w-7 h-7 text-accent" />
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-foreground mb-4">Why We Built Beacon Admit</h3>

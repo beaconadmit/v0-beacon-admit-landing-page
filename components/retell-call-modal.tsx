@@ -35,17 +35,14 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
     if (!retellClient) return
 
     const handleCallStarted = () => {
-      console.log("[v0] Retell call started")
       setCallStatus("connected")
     }
 
     const handleCallEnded = () => {
-      console.log("[v0] Retell call ended")
       setCallStatus("ended")
     }
 
     const handleError = (error: Error) => {
-      console.log("[v0] Retell error:", error)
       setErrorMessage(error.message || "An error occurred during the call")
       setCallStatus("error")
     }
@@ -101,7 +98,6 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
         sampleRate: 24000,
       })
     } catch (error) {
-      console.log("[v0] Error starting call:", error)
       setErrorMessage(error instanceof Error ? error.message : "Failed to start call")
       setCallStatus("error")
     }
@@ -147,18 +143,25 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
         onClick={handleClose}
+        aria-hidden="true"
       />
 
       {/* Modal */}
-      <div className="relative bg-card border border-border rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+      <div 
+        className="relative bg-card border border-border rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
-          <h2 className="text-lg font-semibold text-foreground">Talk to Beacon Admit</h2>
+          <h2 id="modal-title" className="text-lg font-semibold text-foreground">Talk to Beacon Admit</h2>
           <button
             onClick={handleClose}
             className="p-2 rounded-lg hover:bg-muted transition-colors"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5 text-muted-foreground" />
           </button>
@@ -168,8 +171,8 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
         <div className="p-6">
           {callStatus === "idle" && (
             <div className="text-center">
-              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
-                <Phone className="w-10 h-10 text-primary" />
+              <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
+                <Phone className="w-10 h-10 text-accent" />
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-2">
                 Experience Our AI Admissions Agent
@@ -177,7 +180,7 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
               <p className="text-muted-foreground mb-6">
                 Click below to start a conversation with our demo AI admissions coordinator. See how it handles intake questions and gathers information.
               </p>
-              <Button size="lg" onClick={startCall} className="w-full gap-2">
+              <Button size="lg" onClick={startCall} className="w-full gap-2 h-12 bg-accent hover:bg-accent/90">
                 <Phone className="w-4 h-4" />
                 Start Call
               </Button>
@@ -186,8 +189,8 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
 
           {callStatus === "connecting" && (
             <div className="text-center py-8">
-              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
-                <Loader2 className="w-10 h-10 text-primary animate-spin" />
+              <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
+                <Loader2 className="w-10 h-10 text-accent animate-spin" />
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-2">
                 Connecting...
@@ -202,13 +205,13 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
             <div className="text-center">
               <div 
                 className={cn(
-                  "w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-300",
+                  "w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-200",
                   isAgentTalking 
-                    ? "bg-primary/20 ring-4 ring-primary/30 scale-110" 
-                    : "bg-primary/10"
+                    ? "bg-accent/20 ring-4 ring-accent/30 scale-105" 
+                    : "bg-accent/10"
                 )}
               >
-                <Phone className="w-12 h-12 text-primary" />
+                <Phone className="w-12 h-12 text-accent" />
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-2">
                 Call in Progress
@@ -222,7 +225,7 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
                   variant={isMuted ? "destructive" : "outline"}
                   size="lg"
                   onClick={toggleMute}
-                  className="gap-2"
+                  className="gap-2 h-12"
                 >
                   {isMuted ? (
                     <>
@@ -240,7 +243,7 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
                   variant="destructive"
                   size="lg"
                   onClick={endCall}
-                  className="gap-2"
+                  className="gap-2 h-12"
                 >
                   <PhoneOff className="w-4 h-4" />
                   End Call
@@ -261,11 +264,11 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
                 Thank you for trying our demo. Ready to see how Beacon Admit can work for your facility?
               </p>
               <div className="flex flex-col gap-3">
-                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2">
+                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2 h-12 bg-accent hover:bg-accent/90">
                   <Phone className="w-4 h-4" />
                   Start Another Call
                 </Button>
-                <Button variant="outline" size="lg" onClick={handleClose} className="w-full" asChild>
+                <Button variant="outline" size="lg" onClick={handleClose} className="w-full h-12" asChild>
                   <a href="#demo">Book a Full Demo</a>
                 </Button>
               </div>
@@ -284,11 +287,11 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
                 {errorMessage || "Unable to connect to the AI agent. Please try again."}
               </p>
               <div className="flex flex-col gap-3">
-                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2">
+                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2 h-12 bg-accent hover:bg-accent/90">
                   <Phone className="w-4 h-4" />
                   Try Again
                 </Button>
-                <Button variant="outline" size="lg" onClick={handleClose} className="w-full">
+                <Button variant="outline" size="lg" onClick={handleClose} className="w-full h-12">
                   Close
                 </Button>
               </div>

@@ -35,37 +35,37 @@ export function ROICalculator() {
   }
 
   return (
-    <section id="roi" className="py-20 lg:py-32 bg-card/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm mb-6">
+    <section id="roi" className="py-16 lg:py-24 bg-card">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-medium mb-6">
             <Calculator className="w-4 h-4" />
             ROI Calculator
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground text-balance">
+          <h2 className="text-[clamp(1.75rem,4vw,2.25rem)] font-semibold text-foreground leading-[1.2] text-balance">
             One Recovered Admission Can Pay for the System Many Times Over
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+          <p className="mt-6 text-base text-muted-foreground leading-relaxed">
             For many behavioral health programs, even one additional admission per month can represent significant revenue. Beacon Admit is built to help recover opportunities that are currently lost to missed calls, slow follow-up, or inconsistent intake coverage.
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Inputs */}
-            <div className="bg-background border border-border rounded-2xl p-6 space-y-8">
+            <div className="bg-background border border-border rounded-xl p-6 space-y-8">
               <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                <Calculator className="w-5 h-5 text-primary" />
+                <Calculator className="w-5 h-5 text-accent" />
                 Your Numbers
               </h3>
 
               <div className="space-y-6">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="missed-calls" className="text-sm text-foreground">
+                    <Label htmlFor="missed-calls" className="text-sm text-foreground font-medium">
                       Average Monthly Missed Calls
                     </Label>
-                    <span className="text-sm font-semibold text-primary">{missedCalls}</span>
+                    <span className="text-sm font-semibold text-accent">{missedCalls}</span>
                   </div>
                   <Slider
                     id="missed-calls"
@@ -80,10 +80,10 @@ export function ROICalculator() {
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="qualified-rate" className="text-sm text-foreground">
+                    <Label htmlFor="qualified-rate" className="text-sm text-foreground font-medium">
                       Estimated Qualified Inquiry Rate
                     </Label>
-                    <span className="text-sm font-semibold text-primary">{qualifiedRate}%</span>
+                    <span className="text-sm font-semibold text-accent">{qualifiedRate}%</span>
                   </div>
                   <Slider
                     id="qualified-rate"
@@ -98,10 +98,10 @@ export function ROICalculator() {
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="conversion-rate" className="text-sm text-foreground">
+                    <Label htmlFor="conversion-rate" className="text-sm text-foreground font-medium">
                       Estimated Admission Conversion Rate
                     </Label>
-                    <span className="text-sm font-semibold text-primary">{conversionRate}%</span>
+                    <span className="text-sm font-semibold text-accent">{conversionRate}%</span>
                   </div>
                   <Slider
                     id="conversion-rate"
@@ -116,10 +116,10 @@ export function ROICalculator() {
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="admission-value" className="text-sm text-foreground">
+                    <Label htmlFor="admission-value" className="text-sm text-foreground font-medium">
                       Average Value Per Admission
                     </Label>
-                    <span className="text-sm font-semibold text-primary">{formatCurrency(admissionValue)}</span>
+                    <span className="text-sm font-semibold text-accent">{formatCurrency(admissionValue)}</span>
                   </div>
                   <Input
                     id="admission-value"
@@ -129,39 +129,39 @@ export function ROICalculator() {
                     min={1000}
                     max={100000}
                     step={1000}
-                    className="bg-card"
+                    className="bg-card border-input"
                   />
                 </div>
               </div>
             </div>
 
             {/* Results */}
-            <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6 space-y-6">
+            <div className="bg-accent/5 border border-accent/20 rounded-xl p-6 space-y-6">
               <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-primary" />
+                <TrendingUp className="w-5 h-5 text-accent" />
                 Potential Recovery
               </h3>
 
               <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-background/50 border border-border">
+                <div className="p-4 rounded-lg bg-background border border-border">
                   <div className="text-sm text-muted-foreground">Qualified Inquiries per Month</div>
                   <div className="text-2xl font-bold text-foreground">{results.qualifiedInquiries}</div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-background/50 border border-border">
+                <div className="p-4 rounded-lg bg-background border border-border">
                   <div className="text-sm text-muted-foreground">Potential Admissions per Month</div>
                   <div className="text-2xl font-bold text-foreground">{results.potentialAdmissions}</div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-primary/10 border border-primary/30">
+                <div className="p-4 rounded-lg bg-accent/10 border border-accent/30">
                   <div className="text-sm text-muted-foreground flex items-center gap-2">
                     <DollarSign className="w-4 h-4" />
                     Estimated Monthly Revenue Opportunity
                   </div>
-                  <div className="text-3xl font-bold text-primary">{formatCurrency(results.monthlyRevenue)}</div>
+                  <div className="text-3xl font-bold text-accent">{formatCurrency(results.monthlyRevenue)}</div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-primary/20 border border-primary/40">
+                <div className="p-4 rounded-lg bg-primary/10 border border-primary/30">
                   <div className="text-sm text-muted-foreground flex items-center gap-2">
                     <TrendingUp className="w-4 h-4" />
                     Estimated Annual Revenue Opportunity
