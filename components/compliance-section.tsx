@@ -11,25 +11,25 @@ const complianceItems = [
 
 export function ComplianceSection() {
   return (
-    <section className="py-20 lg:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-16 lg:py-24">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground text-balance">
+            <h2 className="text-[clamp(1.75rem,4vw,2.25rem)] font-semibold text-foreground leading-[1.2] text-balance">
               Designed for Sensitive Admissions Conversations
             </h2>
-            <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+            <p className="mt-6 text-base text-muted-foreground leading-relaxed">
               Beacon Admit is designed to support admissions workflows while keeping clinical decisions, diagnosis, and treatment recommendations with your licensed team.
             </p>
             
             <div className="mt-8 space-y-4">
-              <div className="p-4 rounded-xl bg-primary/5 border border-primary/20">
+              <div className="p-4 rounded-xl bg-accent/5 border border-accent/20">
                 <p className="text-sm text-muted-foreground">
                   <strong className="text-foreground">HIPAA:</strong> For programs handling protected health information, HIPAA generally requires covered entities and business associates to use appropriate Business Associate Agreements when PHI is created, received, maintained, or transmitted on behalf of a covered entity.
                 </p>
               </div>
               
-              <div className="p-4 rounded-xl bg-primary/5 border border-primary/20">
+              <div className="p-4 rounded-xl bg-accent/5 border border-accent/20">
                 <p className="text-sm text-muted-foreground">
                   <strong className="text-foreground">42 CFR Part 2:</strong> For substance use disorder treatment programs, 42 CFR Part 2 places additional restrictions on the use and disclosure of SUD patient records.
                 </p>
@@ -43,14 +43,14 @@ export function ComplianceSection() {
                 key={index}
                 className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border"
               >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <item.icon className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center flex-shrink-0">
+                  <item.icon className="w-5 h-5 text-success" />
                 </div>
                 <span className="text-foreground">{item.text}</span>
               </div>
             ))}
             
-            <p className="text-xs text-muted-foreground mt-6 p-4 rounded-xl bg-muted/50">
+            <p className="text-xs text-muted-foreground mt-6 p-4 rounded-xl bg-muted">
               Call recording and consent language can be configured by state and facility policy. Beacon Admit is designed for HIPAA-conscious admissions workflows, and a BAA can be made available where applicable.
             </p>
           </div>

@@ -43,39 +43,40 @@ export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section id="faq" className="py-20 lg:py-32 bg-card/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground text-balance">
+    <section id="faq" className="py-16 lg:py-24 bg-card">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto text-center mb-12">
+          <h2 className="text-[clamp(1.75rem,4vw,2.25rem)] font-semibold text-foreground leading-[1.2] text-balance">
             Frequently Asked Questions
           </h2>
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-4">
+        <div className="max-w-3xl mx-auto space-y-3">
           {faqs.map((faq, index) => (
             <div 
               key={index}
               className="bg-background border border-border rounded-xl overflow-hidden"
             >
               <button
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-muted/30 transition-colors"
+                className="w-full flex items-center justify-between p-5 text-left hover:bg-muted/30 transition-colors"
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                aria-expanded={openIndex === index}
               >
                 <span className="font-medium text-foreground pr-4">{faq.question}</span>
                 <ChevronDown 
                   className={cn(
-                    "w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform",
+                    "w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-200",
                     openIndex === index && "rotate-180"
                   )}
                 />
               </button>
               <div 
                 className={cn(
-                  "overflow-hidden transition-all duration-300",
+                  "overflow-hidden transition-all duration-200",
                   openIndex === index ? "max-h-96" : "max-h-0"
                 )}
               >
-                <p className="px-6 pb-6 text-muted-foreground leading-relaxed">
+                <p className="px-5 pb-5 text-muted-foreground leading-relaxed">
                   {faq.answer}
                 </p>
               </div>
