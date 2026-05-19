@@ -1,64 +1,73 @@
-import { 
-  PhoneMissed, 
-  Clock, 
-  FileQuestion, 
-  FileText, 
-  Users, 
-  MessageSquareOff,
-  AlertTriangle
-} from "lucide-react"
+import { PhoneMissed, AlertTriangle } from "lucide-react"
 
-const problems = [
-  { icon: PhoneMissed, text: "Missed after-hours calls" },
-  { icon: Clock, text: "Delayed follow-up on web forms" },
-  { icon: FileQuestion, text: "Inconsistent intake questions" },
-  { icon: FileText, text: "No structured call summary" },
-  { icon: Users, text: "Admissions staff wasting time on unqualified leads" },
-  { icon: MessageSquareOff, text: "No automated SMS follow-up" },
-  { icon: AlertTriangle, text: "No clear escalation path for urgent situations" },
+const painPoints = [
+  "Missed after-hours calls",
+  "Delayed follow-up on inquiries",
+  "No structured intake process",
+  "Staff wasting time on unqualified leads",
 ]
 
 export function ProblemSection() {
   return (
     <section id="problem" className="py-16 lg:py-24 bg-card">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <h2 className="text-[clamp(1.75rem,4vw,2.25rem)] font-semibold text-foreground leading-[1.2] text-balance">
-            Your Next Admission Often Calls When Your Team Is Busy, Closed, or Understaffed
-          </h2>
-          <p className="mt-6 text-base text-muted-foreground leading-relaxed">
-            Small and mid-sized behavioral health programs cannot always staff a full 24/7 admissions department. But families, referral partners, and prospective clients do not wait until business hours. They call when the crisis is happening.
-          </p>
-          <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-            When nobody answers — or when follow-up is delayed — that inquiry may call another center, go to a competitor, or never reach treatment.
-          </p>
-        </div>
+        <div className="max-w-3xl mx-auto">
+          {/* Section header */}
+          <div className="mb-12">
+            <h2 className="text-[clamp(1.75rem,4vw,2.25rem)] font-semibold text-foreground leading-[1.2] text-balance">
+              The Cost of a Missed Call
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
+              When families call during a crisis, they don't wait. They call the next facility on their list.
+            </p>
+          </div>
 
-        {/* Stat callout */}
-        <div className="max-w-2xl mx-auto mb-12 p-6 rounded-xl bg-warning/10 border-l-4 border-warning text-center">
-          <p className="text-lg font-semibold text-foreground">
-            73% of after-hours calls to behavioral health programs go unanswered.
-          </p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
-          {problems.map((problem, index) => (
-            <div 
-              key={index}
-              className="flex items-center gap-3 p-4 rounded-xl bg-background border border-border hover:border-accent/30 transition-colors"
-            >
-              <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center flex-shrink-0">
-                <problem.icon className="w-5 h-5 text-destructive" />
-              </div>
-              <span className="text-sm text-foreground">{problem.text}</span>
+          {/* Key stat */}
+          <div className="flex items-start gap-4 p-6 rounded-2xl bg-warning/5 border border-warning/20 mb-6">
+            <div className="w-12 h-12 rounded-xl bg-warning/10 flex items-center justify-center flex-shrink-0">
+              <PhoneMissed className="w-6 h-6 text-warning" />
             </div>
-          ))}
-        </div>
+            <div>
+              <p className="text-2xl font-bold text-foreground">42%</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                of people who don&#39;t reach their behavioral health provider on the first call never try again
+              </p>
+              <p className="text-xs text-muted-foreground/60 mt-2">
+                Source: Mental Health America 2025 Access Report
+              </p>
+            </div>
+          </div>
 
-        <div className="mt-12 text-center">
-          <div className="inline-block p-6 rounded-xl bg-accent/5 border border-accent/20">
+          {/* Referral window -- what this really costs */}
+          <div className="p-5 rounded-xl bg-muted/50 border border-border mb-12">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              <span className="font-semibold text-foreground">Each missed call doesn&#39;t just stay a missed call.</span>{" "}
+              In referral markets, another facility picks up the same opportunity within
+              <span className="font-semibold text-foreground"> under 8 minutes</span> — and the case is coded &quot;placed elsewhere.&quot;
+              <span className="text-xs text-muted-foreground/60"> Source: Bx Health CEO Anthony DiLorenzo, 2026</span>
+            </p>
+          </div>
+
+          {/* Pain points - minimal list */}
+          <div className="space-y-4 mb-12">
+            <p className="text-foreground font-medium">Common gaps in admissions coverage:</p>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {painPoints.map((point, index) => (
+                <div 
+                  key={index}
+                  className="flex items-center gap-3 p-3 rounded-lg bg-background/50"
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-destructive flex-shrink-0" />
+                  <span className="text-sm text-muted-foreground">{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom message */}
+          <div className="p-6 rounded-2xl bg-accent/5 border border-accent/20 text-center">
             <p className="text-lg font-semibold text-foreground">
-              Beacon Admit helps you respond like a larger admissions department without hiring one.
+              Beacon Admit helps you respond like a larger admissions department — without hiring one.
             </p>
           </div>
         </div>

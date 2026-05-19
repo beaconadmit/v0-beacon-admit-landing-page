@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Menu, X, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -43,8 +44,14 @@ export function Navbar({ onTalkToAgent }: NavbarProps) {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">BA</span>
+            <div className="relative w-8 h-8">
+              <Image
+                src="/beacon_admit_logo.png"
+                alt="Beacon Admit logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
             </div>
             <span className="font-semibold text-lg text-foreground">Beacon Admit</span>
           </Link>
@@ -64,17 +71,17 @@ export function Navbar({ onTalkToAgent }: NavbarProps) {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
+            <Button size="sm" asChild className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2">
+              <Link href="#demo">Get Early Access</Link>
+            </Button>
             <Button 
               variant="ghost" 
               size="sm" 
               onClick={onTalkToAgent} 
-              className="gap-2 text-accent hover:text-accent hover:bg-accent/10"
+              className="gap-2 text-primary hover:text-primary hover:bg-primary/10"
             >
               <Phone className="w-4 h-4" />
-              Talk to Agent
-            </Button>
-            <Button size="sm" asChild className="bg-primary hover:bg-primary/90">
-              <Link href="#demo">Book a Demo</Link>
+              Try AI Demo
             </Button>
           </div>
 
@@ -88,37 +95,37 @@ export function Navbar({ onTalkToAgent }: NavbarProps) {
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border bg-card">
-            <div className="flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors px-2"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => { onTalkToAgent(); setMobileMenuOpen(false) }} 
-                  className="gap-2 w-full justify-center border-accent text-accent hover:bg-accent/10"
-                >
-                  <Phone className="w-4 h-4" />
-                  Talk to Agent
-                </Button>
-                <Button size="sm" asChild className="w-full justify-center bg-primary hover:bg-primary/90">
-                  <Link href="#demo" onClick={() => setMobileMenuOpen(false)}>Book a Demo</Link>
-                </Button>
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden py-4 border-t border-border bg-card">
+              <div className="flex flex-col gap-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors px-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <div className="flex flex-col gap-2 pt-4 border-t border-border">
+                  <Button size="sm" asChild className="w-full justify-center bg-accent hover:bg-accent/90 text-accent-foreground">
+                    <Link href="#demo" onClick={() => setMobileMenuOpen(false)}>Get Early Access</Link>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => { onTalkToAgent(); setMobileMenuOpen(false) }} 
+                    className="gap-2 w-full justify-center border-primary text-primary hover:bg-primary/10"
+                  >
+                    <Phone className="w-4 h-4" />
+                    Try AI Demo
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
       </nav>
     </header>
   )

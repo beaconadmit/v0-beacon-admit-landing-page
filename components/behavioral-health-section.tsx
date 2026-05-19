@@ -37,7 +37,7 @@ export function BehavioralHealthSection() {
 
             <div className="mt-8 p-4 rounded-xl bg-accent/5 border border-accent/20">
               <p className="text-sm text-muted-foreground">
-                <strong className="text-foreground">Clear disclaimer:</strong> The AI is not a clinician and does not provide clinical advice or diagnoses.
+                <strong className="text-foreground">Disclaimer:</strong> The AI is not a clinician and does not provide clinical advice or diagnoses.
               </p>
             </div>
           </div>

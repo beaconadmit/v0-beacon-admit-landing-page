@@ -5,6 +5,8 @@ import { Calculator, DollarSign, TrendingUp } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export function ROICalculator() {
   const [missedCalls, setMissedCalls] = useState(50)
@@ -173,6 +175,13 @@ export function ROICalculator() {
               <p className="text-xs text-muted-foreground">
                 This is not a guarantee. It is a planning tool to help operators estimate the cost of missed admissions opportunities.
               </p>
+
+              <Button asChild size="lg" className="w-full gap-2 bg-accent hover:bg-accent/90 text-accent-foreground mt-4">
+                <Link href="#demo">
+                  See How We Can Recover This for You
+                  <TrendingUp className="w-4 h-4" />
+                </Link>
+              </Button>
             </div>
           </div>
         </div>

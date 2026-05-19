@@ -24,28 +24,37 @@ export function HeroSection({ onTalkToAgent }: HeroSectionProps) {
             </div>
 
             <h1 className="text-[clamp(2.25rem,5vw,3.5rem)] font-bold text-foreground leading-[1.15] text-balance">
-              Never Miss a Treatment Inquiry After Hours Again
+              Recover the Admissions Calls Your Program Is Missing
             </h1>
 
-            <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-              Beacon Admit is a 24/7 AI admissions coordinator built for behavioral health, detox, residential, PHP, and IOP programs. It answers calls, captures inquiry details, screens for fit, and routes qualified admissions opportunities to your team in real time.
+            <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
+              Beacon Admit answers every call, captures inquiry details, and routes qualified admissions opportunities to your team in real time — even after hours.
             </p>
 
+            {/* Stat block - moved from Problem section */}
+            <div className="mt-6 p-4 rounded-lg bg-warning/10 border-l-4 border-warning">
+              <p className="text-sm font-semibold text-foreground">
+                73% of after-hours calls to behavioral health programs go unanswered.
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Source: National behavioral health access surveys
+              </p>
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <Button size="lg" asChild className="gap-2 h-12 px-8 bg-primary hover:bg-primary/90 text-base">
-                <Link href="#demo">
-                  Book a Live Demo
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </Button>
               <Button 
                 size="lg" 
-                variant="outline" 
                 onClick={onTalkToAgent} 
-                className="gap-2 h-12 px-8 border-accent text-accent hover:bg-accent/10 text-base"
+                className="gap-2 h-12 px-8 bg-accent hover:bg-accent/90 text-accent-foreground text-base font-semibold"
               >
                 <Play className="w-4 h-4" />
-                See How It Works
+                Try the AI Agent Now
+              </Button>
+              <Button size="lg" asChild variant="outline" className="gap-2 h-12 px-8 border-primary text-primary hover:bg-primary/10 text-base">
+                <Link href="#demo">
+                  Book a Demo
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </Button>
             </div>
 

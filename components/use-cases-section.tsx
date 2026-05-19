@@ -11,32 +11,32 @@ const useCases = [
   {
     icon: Moon,
     title: "After-Hours Admissions Coverage",
-    description: "Answer calls when your admissions team is offline."
+    description: "Answer calls when your admissions team is offline.",
   },
   {
     icon: PhoneMissed,
     title: "Missed-Call Text Back",
-    description: "Automatically text callers when your team cannot answer."
+    description: "Automatically text callers when your team cannot answer.",
   },
   {
     icon: Globe,
     title: "Website Lead Follow-Up",
-    description: "Call or text new form submissions immediately."
+    description: "Call or text new form submissions immediately.",
   },
   {
     icon: Shield,
     title: "Insurance Pre-Screening",
-    description: "Collect payer, member details, and basic insurance information before staff follow-up."
-  },
-  {
-    icon: Users,
-    title: "Referral Partner Routing",
-    description: "Capture referral source information and route professional referrals differently from direct-to-consumer calls."
+    description: "Collect payer, member details, and basic insurance information before staff follow-up.",
   },
   {
     icon: Clock,
     title: "Admissions Overflow",
-    description: "Support your team during high-volume hours."
+    description: "Support your team during high-volume hours.",
+  },
+  {
+    icon: Users,
+    title: "Referral Partner Routing",
+    description: "Capture referral source information and route professional referrals differently from direct-to-consumer calls.",
   },
 ]
 
@@ -51,11 +51,11 @@ export function UseCasesSection() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {useCases.map((useCase, index) => (
-            <div 
-              key={index}
-              className="p-6 rounded-xl bg-background border border-border hover:border-accent/30 transition-all hover:shadow-md hover:shadow-foreground/5"
-            >
+            {useCases.map((useCase, index) => (
+              <div
+                key={index}
+                className="p-6 rounded-xl bg-background border border-border hover:border-accent/30 transition-all hover:shadow-md hover:shadow-foreground/5"
+              >
               <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4">
                 <useCase.icon className="w-6 h-6 text-accent" />
               </div>

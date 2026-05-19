@@ -14,27 +14,26 @@ export function FinalCTASection({ onTalkToAgent }: FinalCTASectionProps) {
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-[clamp(1.75rem,4vw,2.25rem)] font-semibold text-foreground leading-[1.2] text-balance">
-            Ready to Stop Losing Admissions Calls?
+            Ready to Recover More Admissions Calls?
           </h2>
           <p className="mt-6 text-base text-muted-foreground leading-relaxed">
-            See how Beacon Admit can help your team answer faster, qualify more inquiries, and recover missed opportunities after hours.
+            See how Beacon Admit answers every call, captures inquiry details, and routes qualified opportunities to your team in real time.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <Button size="lg" asChild className="gap-2 h-12 px-8 bg-primary hover:bg-primary/90 text-base">
-              <Link href="#demo">
-                Book a Demo
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
             <Button 
               size="lg" 
-              variant="outline" 
               onClick={onTalkToAgent} 
-              className="gap-2 h-12 px-8 border-accent text-accent hover:bg-accent/10 text-base"
+              className="gap-2 h-12 px-8 bg-accent hover:bg-accent/90 text-accent-foreground text-base font-semibold"
             >
               <Phone className="w-4 h-4" />
-              Talk to Our AI Agent
+              Try the AI Agent
+            </Button>
+            <Button size="lg" variant="outline" asChild className="gap-2 h-12 px-8 border-primary text-primary hover:bg-primary/10 text-base">
+              <Link href="#demo">
+                Get Early Access
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </Button>
           </div>
 
