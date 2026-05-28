@@ -29,8 +29,8 @@ export async function POST(request: Request) {
         {
           name,
           email,
-          facility,
-          facilityType,
+          facility: facility || null,
+          facilityType: facilityType || null,
         }
       ])
 

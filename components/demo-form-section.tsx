@@ -68,12 +68,16 @@ export function DemoFormSection() {
         body: JSON.stringify(data),
       })
 
-      if (!response.ok) throw new Error("Failed to submit")
+      const result = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to submit")
+      }
       
       setIsSubmitted(true)
     } catch (error) {
       console.error("Form submission error:", error)
-      alert("Failed to submit. Please try again.")
+      alert(error instanceof Error ? error.message : "Failed to submit. Please try again.")
     } finally {
       setIsSubmitting(false)
     }
