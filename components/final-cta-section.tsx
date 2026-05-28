@@ -24,12 +24,12 @@ export function FinalCTASection({ onTalkToAgent }: FinalCTASectionProps) {
             <Button 
               size="lg" 
               onClick={onTalkToAgent} 
-              className="gap-2 h-12 px-8 bg-accent hover:bg-accent/90 text-accent-foreground text-base font-semibold"
+              className="gap-2 h-12 px-8 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground text-base font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20"
             >
               <Phone className="w-4 h-4" />
               Try the AI Agent
             </Button>
-            <Button size="lg" variant="outline" asChild className="gap-2 h-12 px-8 border-primary text-primary hover:bg-primary/10 text-base">
+            <Button size="lg" variant="outline" asChild className="gap-2 h-12 px-8 border-primary text-primary hover:bg-[oklch(0.28_0.08_250/0.15)] text-base transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20">
               <Link href="#demo">
                 Get Early Access
                 <ArrowRight className="w-4 h-4" />

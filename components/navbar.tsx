@@ -71,14 +71,14 @@ export function Navbar({ onTalkToAgent }: NavbarProps) {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Button size="sm" asChild className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2">
+                <Button size="sm" asChild className="bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground gap-2 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20">
               <Link href="#demo">Get Early Access</Link>
             </Button>
             <Button 
               variant="ghost" 
               size="sm" 
               onClick={onTalkToAgent} 
-              className="gap-2 text-primary hover:text-primary hover:bg-primary/10"
+              className="gap-2 text-primary hover:text-primary hover:bg-[oklch(0.28_0.08_250/0.15)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20"
             >
               <Phone className="w-4 h-4" />
               Try AI Demo
@@ -110,14 +110,14 @@ export function Navbar({ onTalkToAgent }: NavbarProps) {
                   </Link>
                 ))}
                 <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                  <Button size="sm" asChild className="w-full justify-center bg-accent hover:bg-accent/90 text-accent-foreground">
+                  <Button size="sm" asChild className="w-full justify-center bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20">
                     <Link href="#demo" onClick={() => setMobileMenuOpen(false)}>Get Early Access</Link>
                   </Button>
                   <Button 
                     variant="outline" 
                     size="sm" 
                     onClick={() => { onTalkToAgent(); setMobileMenuOpen(false) }} 
-                    className="gap-2 w-full justify-center border-primary text-primary hover:bg-primary/10"
+                    className="gap-2 w-full justify-center border-primary text-primary hover:bg-[oklch(0.28_0.08_250/0.15)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20"
                   >
                     <Phone className="w-4 h-4" />
                     Try AI Demo

@@ -47,20 +47,20 @@ export default function Home() {
       {/* 4. Built for Behavioral Health */}
       <BehavioralHealthSection />
       
-      {/* 5. How It Works */}
-      <HowItWorksSection />
-      
-      {/* 6. Use Cases */}
-      <UseCasesSection />
-      
-      {/* 7. Compliance & Safety */}
-      <ComplianceSection />
-      
-      {/* 8. ROI Calculator */}
-      <ROICalculator />
-      
-      {/* 9. Founder Credibility */}
-      <FounderSection />
+       {/* 5. ROI Calculator - Moved up as focal point */}
+       <ROICalculator />
+       
+       {/* 6. How It Works */}
+       <HowItWorksSection />
+       
+        {/* 7. Use Cases */}
+        <UseCasesSection />
+        
+        {/* 8. Compliance & Safety */}
+        <ComplianceSection />
+        
+        {/* 9. Founder Credibility */}
+        <FounderSection />
       
       {/* 10. FAQ */}
       <FAQSection />
@@ -78,7 +78,7 @@ export default function Home() {
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-sm border-t border-border p-3 flex gap-2">
         <Button 
           onClick={handleTalkToAgent} 
-          className="flex-1 gap-2 h-11 bg-accent hover:bg-accent/90 text-accent-foreground text-sm font-semibold"
+          className="flex-1 gap-2 h-11 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20"
         >
           <Play className="w-4 h-4" />
           Try AI Demo
@@ -86,7 +86,7 @@ export default function Home() {
         <Button 
           asChild 
           variant="outline" 
-          className="flex-1 gap-2 h-11 border-primary text-primary hover:bg-primary/10 text-sm font-semibold"
+          className="flex-1 gap-2 h-11 border-primary text-primary hover:bg-[oklch(0.28_0.08_250/0.15)] text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20"
         >
           <Link href="#demo">
             Get Early Access

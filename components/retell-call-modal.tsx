@@ -180,7 +180,7 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
               <p className="text-muted-foreground mb-6">
                 Click below to start a conversation with our demo AI admissions coordinator. See how it handles intake questions and gathers information.
               </p>
-              <Button size="lg" onClick={startCall} className="w-full gap-2 h-12 bg-accent hover:bg-accent/90">
+              <Button size="lg" onClick={startCall} className="w-full gap-2 h-12 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20">
                 <Phone className="w-4 h-4" />
                 Start Call
               </Button>
@@ -264,7 +264,7 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
                 Thank you for trying our demo. Ready to see how Beacon Admit can work for your facility?
               </p>
               <div className="flex flex-col gap-3">
-                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2 h-12 bg-accent hover:bg-accent/90">
+                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2 h-12 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20">
                   <Phone className="w-4 h-4" />
                   Start Another Call
                 </Button>
@@ -287,7 +287,7 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
                 {errorMessage || "Unable to connect to the AI agent. Please try again."}
               </p>
               <div className="flex flex-col gap-3">
-                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2 h-12 bg-accent hover:bg-accent/90">
+                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2 h-12 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20">
                   <Phone className="w-4 h-4" />
                   Try Again
                 </Button>

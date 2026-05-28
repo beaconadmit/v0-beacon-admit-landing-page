@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 
 export async function POST() {
-  const agentId = process.env.RETELL_AGENT_ID
+  const agentId = process.env.RETELL_AGENT_ID!
   const apiKey = process.env.RETELL_API_KEY
 
   if (!agentId || !apiKey) {

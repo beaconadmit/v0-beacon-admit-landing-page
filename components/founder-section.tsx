@@ -66,12 +66,9 @@ export function FounderSection() {
 
                 <div className="mt-6 pt-5 border-t border-border">
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Beacon Admit was created by a team with hands-on experience in behavioral health operations, 
-                    substance use treatment admissions, and startup treatment center consulting. The product is 
-                    designed around the real-world admissions problems small and mid-sized programs face every day: 
-                    <span className="font-medium text-foreground"> speed-to-lead</span>,{" "}
-                    <span className="font-medium text-foreground">staffing gaps</span>, caller anxiety, insurance 
-                    friction, and inconsistent follow-up.
+                    Built by operators who've lived the admissions struggle. Beacon Admit solves the exact problems we saw small and mid-sized programs face daily:{" "}
+                    <span className="font-medium text-foreground">missed calls</span>,{" "}
+                    <span className="font-medium text-foreground">staffing gaps</span>, caller anxiety, insurance friction, and spotty follow-up.
                   </p>
                 </div>
               </div>

@@ -207,7 +207,7 @@ export function DemoFormSection() {
                 <Button 
                   type="submit" 
                   size="lg" 
-                  className="w-full h-14 gap-2 bg-accent hover:bg-accent/90 text-accent-foreground text-lg font-semibold rounded-xl" 
+                  className="w-full h-14 gap-2 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground text-lg font-semibold rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20" 
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
