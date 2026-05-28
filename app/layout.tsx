@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://beaconadmit.com'),
   title: 'Beacon Admit | 24/7 AI Admissions Coordinator for Behavioral Health',
   description: 'Never miss a treatment inquiry after hours again. Beacon Admit is a 24/7 AI admissions coordinator built for behavioral health, detox, residential, PHP, and IOP programs.',
   generator: 'v0.app',
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Beacon Admit | 24/7 AI Admissions Coordinator',
     description: 'Never miss a treatment inquiry after hours again. AI-powered admissions coverage for behavioral health programs.',
+    url: 'https://beaconadmit.com',
     type: 'website',
     siteName: 'Beacon Admit',
   },

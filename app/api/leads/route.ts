@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
-import { supabase } from '@/lib/supabase'
+import { db } from '@/lib/supabase'
 
 const formSchema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -23,30 +23,19 @@ export async function POST(request: Request) {
 
     const { name, email, facility, facilityType } = result.data
 
-    const { data, error } = await supabase
-      .from('leads')
-      .insert([
-        {
-          name,
-          email,
-          facility: facility || null,
-          facilityType: facilityType || null,
-        }
-      ])
+    const lead = await db.createLead({
+      name,
+      email,
+      facility: facility || null,
+      facility_type: facilityType || null,
+    })
 
-    if (error) {
-      console.error('Supabase error:', error)
-      return NextResponse.json(
-        { error: 'Failed to save lead' },
-        { status: 500 }
-      )
-    }
-
-    return NextResponse.json({ success: true }, { status: 200 })
+    return NextResponse.json({ success: true, id: lead.id }, { status: 200 })
   } catch (error) {
     console.error('API route error:', error)
+    const message = error instanceof Error ? error.message : 'Internal server error'
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: message },
       { status: 500 }
     )
   }
