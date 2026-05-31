@@ -59,6 +59,22 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Beacon Admit",
+  applicationCategory: "HealthcareApplication",
+  description: "24/7 AI Admissions Coordinator for Behavioral Health facilities. Never miss a treatment inquiry after hours.",
+  url: "https://beaconadmit.com",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  operatingSystem: "Web",
+  creator: {
+    "@type": "Organization",
+    name: "Agile AI Lab",
+    url: "https://agileailab.org",
+  },
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -66,6 +82,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${geistMono.variable} bg-background`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="font-sans antialiased min-h-screen">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

@@ -26,6 +26,10 @@ export async function POST(request: Request) {
     const lead = await db.createLead({
       name,
       email,
+      phone: null,
+      company: null,
+      job_title: null,
+      website: null,
       facility: facility || null,
       facility_type: facilityType || null,
     })

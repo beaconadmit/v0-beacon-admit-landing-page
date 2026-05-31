@@ -20,9 +20,9 @@ export function ROICalculator() {
     const potentialAdmissions = (qualifiedInquiries * conversionRate) / 100
     const monthlyRevenue = potentialAdmissions * admissionValue
     const annualRevenue = monthlyRevenue * 12
-    const beaonCost = 3000 // Estimated monthly cost
-    const netMonthly = monthlyRevenue - beaonCost
-    const roi = beaonCost > 0 ? ((monthlyRevenue - beaonCost) / beaonCost) * 100 : 0
+    const beaconCost = 3000 // Estimated monthly cost
+    const netMonthly = monthlyRevenue - beaconCost
+    const roi = beaconCost > 0 ? ((monthlyRevenue - beaconCost) / beaconCost) * 100 : 0
 
     return {
       qualifiedInquiries: Math.round(qualifiedInquiries * 10) / 10,

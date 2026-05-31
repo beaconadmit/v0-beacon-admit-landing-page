@@ -1,5 +1,3 @@
-import { Lead } from './types'
-
 export interface DatabaseAdapter {
   createLead(lead: Omit<Lead, 'id' | 'created_at'>): Promise<Lead>
   getLeads(): Promise<Lead[]>
@@ -12,10 +10,10 @@ export interface Lead {
   id: number
   name: string
   email: string
-  phone: string | null
-  company: string | null
-  job_title: string | null
-  website: string | null
+  phone?: string | null
+  company?: string | null
+  job_title?: string | null
+  website?: string | null
   facility: string | null
   facility_type: string | null
   created_at: string
