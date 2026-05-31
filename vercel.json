@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/health",
+      "destination": "https://beacon-admit-mvp-767264868315.us-central1.run.app/api/health"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://beacon-admit-mvp-767264868315.us-central1.run.app/api/:path*"
+    },
+    {
+      "source": "/master-admin",
+      "destination": "https://beacon-admit-mvp-767264868315.us-central1.run.app/master-admin"
+    },
+    {
+      "source": "/clinic-crm",
+      "destination": "https://beacon-admit-mvp-767264868315.us-central1.run.app/clinic-crm"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "https://beacon-admit-mvp-767264868315.us-central1.run.app/dashboard"
+    }
+  ]
+}
