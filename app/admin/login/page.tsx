@@ -4,8 +4,16 @@ import { LoginForm } from './login-form'
 
 export default async function AdminLoginPage() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
+  
+  let user = null
+  try {
+    const { data, error } = await supabase.auth.getUser()
+    if (error) console.error('Auth error:', error.message)
+    user = data.user
+  } catch (e) {
+    console.error('Failed to get user:', e)
+  }
+  
   if (user) redirect('/admin')
 
   return (
