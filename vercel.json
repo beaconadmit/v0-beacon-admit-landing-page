@@ -2,23 +2,31 @@
   "rewrites": [
     {
       "source": "/api/health",
-      "destination": "https://beacon-admit-mvp-767264868315.us-central1.run.app/api/health"
+      "destination": "https://beacon-admit-dashboard-wiog6d4qpa-uc.a.run.app/api/health"
     },
     {
       "source": "/api/:path*",
-      "destination": "https://beacon-admit-mvp-767264868315.us-central1.run.app/api/:path*"
+      "destination": "https://beacon-admit-dashboard-wiog6d4qpa-uc.a.run.app/api/:path*"
     },
     {
       "source": "/master-admin",
-      "destination": "https://beacon-admit-mvp-767264868315.us-central1.run.app/master-admin"
+      "destination": "https://beacon-admit-dashboard-wiog6d4qpa-uc.a.run.app/master-admin"
     },
     {
       "source": "/clinic-crm",
-      "destination": "https://beacon-admit-mvp-767264868315.us-central1.run.app/clinic-crm"
+      "destination": "https://beacon-admit-dashboard-wiog6d4qpa-uc.a.run.app/clinic-crm"
     },
     {
       "source": "/dashboard",
-      "destination": "https://beacon-admit-mvp-767264868315.us-central1.run.app/dashboard"
+      "destination": "https://beacon-admit-dashboard-wiog6d4qpa-uc.a.run.app/dashboard"
+    },
+    {
+      "source": "/clinic/:path*",
+      "destination": "https://beacon-admit-dashboard-wiog6d4qpa-uc.a.run.app/clinic/:path*"
+    },
+    {
+      "source": "/api/admin/:path*",
+      "destination": "https://beacon-admit-dashboard-wiog6d4qpa-uc.a.run.app/api/admin/:path*"
     }
   ]
 }
