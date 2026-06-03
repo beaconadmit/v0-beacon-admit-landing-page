@@ -98,8 +98,8 @@ export default function RootLayout({
           src="https://dashboard.retellai.com/retell-widget.js"
           type="module"
           strategy="lazyOnload"
-          data-public-key={process.env.NEXT_PUBLIC_RETELL_PUBLIC_KEY || 'PUBLIC_KEY_PLACEHOLDER'}
-          data-agent-id="agent_ac21269f6c862eda5ecc5a3215"
+          data-public-key={process.env.NEXT_PUBLIC_RETELL_PUBLIC_KEY || 'public_key_6a7d0e0da4e7b953cc009'}
+          data-agent-id="agent_3a6c9af5e44128c99fb6abc2fa"
         />
       </body>
     </html>
