@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import Script from 'next/script'
 import './globals.css'
 
 const inter = Inter({ 
@@ -92,6 +93,14 @@ export default function RootLayout({
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
         <SpeedInsights />
+        <Script
+          id="retell-widget"
+          src="https://dashboard.retellai.com/retell-widget.js"
+          type="module"
+          strategy="lazyOnload"
+          data-public-key={process.env.NEXT_PUBLIC_RETELL_PUBLIC_KEY || 'PUBLIC_KEY_PLACEHOLDER'}
+          data-agent-id="agent_ac21269f6c862eda5ecc5a3215"
+        />
       </body>
     </html>
   )
