@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_BASE_URL = (
-  process.env.BEACON_API_BASE_URL ||
-  process.env.NEXT_PUBLIC_API_URL ||
-  "http://127.0.0.1:8080"
-).replace(/\/$/, "");
+function backendBaseUrl(): string {
+  return (
+    process.env.BEACON_API_BASE_URL ||
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://beacon-admit-mvp-wiog6d4qpa-uc.a.run.app"
+  ).replace(/\/$/, "");
+}
 
-const ADMIN_KEY =
-  process.env.ONBOARDING_ADMIN_SHARED_KEY || process.env.ADMIN_API_SHARED_KEY || "";
+function adminKey(): string {
+  return process.env.ONBOARDING_ADMIN_SHARED_KEY || process.env.ADMIN_API_SHARED_KEY || "";
+}
 
 function buildBackendUrl(request: NextRequest, pathParts: string[]): string {
-  const backendUrl = new URL(`${BACKEND_BASE_URL}/api/${pathParts.join("/")}`);
+  const backendUrl = new URL(`${backendBaseUrl()}/api/${pathParts.join("/")}`);
   request.nextUrl.searchParams.forEach((value, key) => {
     backendUrl.searchParams.append(key, value);
   });
@@ -30,7 +33,8 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
 
   // Keep admin secrets server-side. Browser code should never use NEXT_PUBLIC_ADMIN_API_KEY.
   if (path?.[0] === "admin") {
-    if (!ADMIN_KEY) {
+    const key = adminKey();
+    if (!key) {
       return NextResponse.json(
         {
           status: "error",
@@ -40,7 +44,7 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
         { status: 500 },
       );
     }
-    headers.set("x-beacon-admin-key", ADMIN_KEY);
+    headers.set("x-beacon-admin-key", key);
   }
 
   const method = request.method.toUpperCase();
