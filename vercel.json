@@ -1,14 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/api/health",
-      "destination": "https://beacon-admit-mvp-wiog6d4qpa-uc.a.run.app/api/health"
-    },
-    {
-      "source": "/api/:path*",
-      "destination": "https://beacon-admit-mvp-wiog6d4qpa-uc.a.run.app/api/:path*"
-    },
-    {
       "source": "/master-admin",
       "destination": "https://beacon-admit-mvp-wiog6d4qpa-uc.a.run.app/master-admin"
     },
@@ -23,10 +15,6 @@
     {
       "source": "/clinic/:path*",
       "destination": "https://beacon-admit-mvp-wiog6d4qpa-uc.a.run.app/clinic/:path*"
-    },
-    {
-      "source": "/api/admin/:path*",
-      "destination": "https://beacon-admit-mvp-wiog6d4qpa-uc.a.run.app/api/admin/:path*"
     }
   ]
 }
