@@ -11,10 +11,14 @@ const formSchema = z.object({
   states_served: z.array(z.string()).optional(),
   current_after_hours: z.string().optional(),
   insurance_accepted: z.array(z.string()).optional(),
-  agree_to_contact: z.boolean(),
-  contact_name: z.string().min(2, 'Contact name is required'),
-  facility_name: z.string().min(2, 'Facility name is required'),
-  facility_type: z.string().min(2, 'Facility type is required'),
+  agree_to_contact: z.boolean().optional(),
+  contact_name: z.string().min(2, 'Contact name is required').optional(),
+  facility_name: z.string().min(2, 'Facility name is required').optional(),
+  facility_type: z.string().min(2, 'Facility type is required').optional(),
+  organization: z.string().optional(),
+  programType: z.string().optional(),
+  coverageNeed: z.string().optional(),
+  calculator: z.record(z.unknown()).optional(),
 })
 
 export async function POST(request: Request) {
@@ -29,7 +33,11 @@ export async function POST(request: Request) {
       )
     }
 
-    const { name, email, facility, facilityType, bed_count, states_served, current_after_hours, insurance_accepted, agree_to_contact, contact_name, facility_name, facility_type } = result.data
+    const { 
+      name, email, facility, facilityType, bed_count, states_served, 
+      current_after_hours, insurance_accepted, agree_to_contact, 
+      contact_name, facility_name, facility_type, organization, programType, coverageNeed 
+    } = result.data
 
     const lead = await db.createLead({
       name,
@@ -38,14 +46,14 @@ export async function POST(request: Request) {
       company: null,
       job_title: null,
       website: null,
-      facility: facility || null,
-      facility_type: facility_type || facilityType || null,
-      contact_name,
+      facility: facility || facility_name || organization || null,
+      facility_type: facility_type || facilityType || programType || null,
+      contact_name: contact_name || name,
       bed_count,
       states_served,
-      current_after_hours,
+      current_after_hours: current_after_hours || coverageNeed || null,
       insurance_accepted,
-      agree_to_contact,
+      agree_to_contact: agree_to_contact ?? true,
     })
 
     return NextResponse.json({ success: true, id: lead.id }, { status: 200 })
