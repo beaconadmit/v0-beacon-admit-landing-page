@@ -17,6 +17,12 @@ export class SupabaseAdapter implements DatabaseAdapter {
           website: lead.website,
           facility: lead.facility,
           facility_type: lead.facility_type,
+          contact_name: lead.contact_name,
+          bed_count: lead.bed_count,
+          states_served: lead.states_served,
+          current_after_hours: lead.current_after_hours,
+          insurance_accepted: lead.insurance_accepted,
+          agree_to_contact: lead.agree_to_contact,
         }
       ])
       .select()

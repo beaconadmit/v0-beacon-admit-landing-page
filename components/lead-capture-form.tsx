@@ -150,17 +150,18 @@ export default function LeadCaptureForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          facility_name: formData.facility_name,
-          contact_name: formData.contact_name,
+          name: formData.contact_name,
           email: formData.email,
-          phone: formData.phone,
-          facility_type: formData.facility_type,
+          facility: formData.facility_name,
+          facilityType: formData.facility_type,
+          phone: formData.phone || null,
           bed_count: formData.bed_count ? parseInt(formData.bed_count) : null,
-          states_served: formData.states_served,
-          current_after_hours: formData.current_after_hours,
+          states_served: formData.states_served.length > 0 ? formData.states_served : null,
+          current_after_hours: formData.current_after_hours || null,
           insurance_accepted: formData.insurance_accepted
             ? formData.insurance_accepted.split(",").map((s) => s.trim())
-            : [],
+            : null,
+          agree_to_contact: formData.agree_to_contact,
         }),
       });
 

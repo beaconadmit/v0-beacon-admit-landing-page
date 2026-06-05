@@ -6,21 +6,37 @@ import { X, Phone, PhoneOff, Mic, MicOff, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
+type AgentProfile = "afterhours" | "full-admissions" | "custom-agent"
+
+const PROFILE_LABELS: Record<AgentProfile, string> = {
+  afterhours: "After Hours Intake Specialist",
+  "full-admissions": "Full Admissions Coordinator",
+  "custom-agent": "Custom Agent Builder",
+}
+
 interface RetellCallModalProps {
   isOpen: boolean
   onClose: () => void
+  /** Optional agent profile key — routes to the per-profile Retell agent */
+  agentProfile?: AgentProfile
 }
 
 type CallStatus = "idle" | "connecting" | "connected" | "ended" | "error"
 
-export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
+/**
+ * Full-screen modal for Retell voice calls.
+ * Accepts an optional `agentProfile` to dynamically select the correct
+ * Retell agent via the `/api/retell/create-web-call` endpoint.
+ */
+export function RetellCallModal({ isOpen, onClose, agentProfile }: RetellCallModalProps) {
   const [callStatus, setCallStatus] = useState<CallStatus>("idle")
   const [isMuted, setIsMuted] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [retellClient, setRetellClient] = useState<RetellWebClient | null>(null)
   const [isAgentTalking, setIsAgentTalking] = useState(false)
 
-  // Initialize Retell client on mount
+  const agentLabel = agentProfile ? PROFILE_LABELS[agentProfile] : "AI Admissions Agent"
+
   useEffect(() => {
     const client = new RetellWebClient()
     setRetellClient(client)
@@ -30,30 +46,17 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
     }
   }, [])
 
-  // Set up event listeners
   useEffect(() => {
     if (!retellClient) return
 
-    const handleCallStarted = () => {
-      setCallStatus("connected")
-    }
-
-    const handleCallEnded = () => {
-      setCallStatus("ended")
-    }
-
+    const handleCallStarted = () => setCallStatus("connected")
+    const handleCallEnded = () => setCallStatus("ended")
     const handleError = (error: Error) => {
       setErrorMessage(error.message || "An error occurred during the call")
       setCallStatus("error")
     }
-
-    const handleAgentStartTalking = () => {
-      setIsAgentTalking(true)
-    }
-
-    const handleAgentStopTalking = () => {
-      setIsAgentTalking(false)
-    }
+    const handleAgentStartTalking = () => setIsAgentTalking(true)
+    const handleAgentStopTalking = () => setIsAgentTalking(false)
 
     retellClient.on("call_started", handleCallStarted)
     retellClient.on("call_ended", handleCallEnded)
@@ -77,12 +80,12 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
     setErrorMessage(null)
 
     try {
-      // Call our API to create a web call and get an access token
       const response = await fetch("/api/retell/create-web-call", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          agent_profile: agentProfile,
+        }),
       })
 
       if (!response.ok) {
@@ -91,8 +94,7 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
       }
 
       const data = await response.json()
-      
-      // Start the call with the access token
+
       await retellClient.startCall({
         accessToken: data.access_token,
         sampleRate: 24000,
@@ -101,7 +103,7 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
       setErrorMessage(error instanceof Error ? error.message : "Failed to start call")
       setCallStatus("error")
     }
-  }, [retellClient])
+  }, [retellClient, agentProfile])
 
   const endCall = useCallback(() => {
     if (retellClient) {
@@ -142,14 +144,14 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
         onClick={handleClose}
         aria-hidden="true"
       />
 
       {/* Modal */}
-      <div 
+      <div
         className="relative bg-card border border-border rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden"
         role="dialog"
         aria-modal="true"
@@ -157,7 +159,16 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
-          <h2 id="modal-title" className="text-lg font-semibold text-foreground">Talk to Beacon Admit</h2>
+          <div>
+            <h2 id="modal-title" className="text-lg font-extrabold text-foreground">
+              Talk to {agentLabel}
+            </h2>
+            {agentProfile && (
+              <p className="text-xs text-muted-foreground mt-0.5">
+                {agentProfile.replace("_", " ")} demo agent
+              </p>
+            )}
+          </div>
           <button
             onClick={handleClose}
             className="p-2 rounded-lg hover:bg-muted transition-colors"
@@ -174,13 +185,17 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
               <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
                 <Phone className="w-10 h-10 text-accent" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">
-                Experience Our AI Admissions Agent
+              <h3 className="text-xl font-extrabold text-foreground mb-2">
+                Experience Our {agentLabel}
               </h3>
               <p className="text-muted-foreground mb-6">
-                Click below to start a conversation with our demo AI admissions coordinator. See how it handles intake questions and gathers information.
+                Click below to start a conversation with our demo {agentProfile ? PROFILE_LABELS[agentProfile].toLowerCase() : "AI admissions coordinator"}. See how it handles intake questions and gathers information.
               </p>
-              <Button size="lg" onClick={startCall} className="w-full gap-2 h-12 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20">
+              <Button
+                size="lg"
+                onClick={startCall}
+                className="w-full gap-2 h-12 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20"
+              >
                 <Phone className="w-4 h-4" />
                 Start Call
               </Button>
@@ -192,7 +207,7 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
               <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
                 <Loader2 className="w-10 h-10 text-accent animate-spin" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">
+              <h3 className="text-xl font-extrabold text-foreground mb-2">
                 Connecting...
               </h3>
               <p className="text-muted-foreground">
@@ -203,17 +218,17 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
 
           {callStatus === "connected" && (
             <div className="text-center">
-              <div 
+              <div
                 className={cn(
                   "w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-200",
-                  isAgentTalking 
-                    ? "bg-accent/20 ring-4 ring-accent/30 scale-105" 
+                  isAgentTalking
+                    ? "bg-accent/20 ring-4 ring-accent/30 scale-105"
                     : "bg-accent/10"
                 )}
               >
                 <Phone className="w-12 h-12 text-accent" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">
+              <h3 className="text-xl font-extrabold text-foreground mb-2">
                 Call in Progress
               </h3>
               <p className="text-sm text-muted-foreground mb-6">
@@ -257,14 +272,18 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
               <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mx-auto mb-6">
                 <PhoneOff className="w-10 h-10 text-muted-foreground" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">
+              <h3 className="text-xl font-extrabold text-foreground mb-2">
                 Call Ended
               </h3>
               <p className="text-muted-foreground mb-6">
                 Thank you for trying our demo. Ready to see how Beacon Admit can work for your facility?
               </p>
               <div className="flex flex-col gap-3">
-                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2 h-12 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20">
+                <Button
+                  size="lg"
+                  onClick={handleStartNewCall}
+                  className="w-full gap-2 h-12 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20"
+                >
                   <Phone className="w-4 h-4" />
                   Start Another Call
                 </Button>
@@ -280,14 +299,18 @@ export function RetellCallModal({ isOpen, onClose }: RetellCallModalProps) {
               <div className="w-20 h-20 rounded-full bg-destructive/10 flex items-center justify-center mx-auto mb-6">
                 <X className="w-10 h-10 text-destructive" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">
+              <h3 className="text-xl font-extrabold text-foreground mb-2">
                 Connection Error
               </h3>
               <p className="text-muted-foreground mb-6">
                 {errorMessage || "Unable to connect to the AI agent. Please try again."}
               </p>
               <div className="flex flex-col gap-3">
-                <Button size="lg" onClick={handleStartNewCall} className="w-full gap-2 h-12 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20">
+                <Button
+                  size="lg"
+                  onClick={handleStartNewCall}
+                  className="w-full gap-2 h-12 bg-accent hover:bg-[oklch(0.45_0.10_185)] text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/20"
+                >
                   <Phone className="w-4 h-4" />
                   Try Again
                 </Button>

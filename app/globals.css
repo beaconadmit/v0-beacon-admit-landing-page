@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@plugin '@tailwindcss/typography';
 
 /* Force light theme - no automatic dark mode detection */
 @custom-variant dark (&:is(.dark-mode-disabled *));
@@ -141,8 +142,9 @@
 }
 
 @theme inline {
-  --font-sans: 'Inter', 'Inter Fallback', system-ui, -apple-system, sans-serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
+  --font-sans: var(--font-plus-jakarta), 'Plus Jakarta Sans Fallback', system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-outfit), 'Outfit Fallback', system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -192,6 +194,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
 }
 
 /* Smooth scroll with reduced motion respect */
@@ -237,10 +242,142 @@ html {
   }
 }
 
+/* Voice wave bar animation for hero call console */
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.78); opacity: 0.62; }
+  50% { transform: scaleY(1.08); opacity: 1; }
+}
+
+/* Pulse dot ring animation (green live indicator) */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(42, 127, 75, 0.25); }
+  70% { box-shadow: 0 0 0 9px rgba(42, 127, 75, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(42, 127, 75, 0); }
+}
+
 .animate-fade-in-up {
   animation: fade-in-up 0.2s ease-out forwards;
 }
 
 .animate-pulse-soft {
   animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.8s infinite;
+}
+
+/* Gradient text utility — blue→teal from mockup */
+.gradient-text {
+  background: linear-gradient(100deg, oklch(0.35 0.10 250) 0%, oklch(0.52 0.10 185) 64%, oklch(0.55 0.12 180) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Frosted glass card — used for hero console and floating cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(16, 32, 51, 0.10);
+  box-shadow: 0 28px 70px rgba(6, 35, 75, 0.14);
+}
+
+/* Voice wave bars container */
+.voice-bars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.voice-bars span {
+  display: block;
+  width: 8px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, oklch(0.55 0.12 180), oklch(0.35 0.10 250));
+  animation: wave 1.4s ease-in-out infinite;
+  opacity: 0.82;
+}
+
+/* Dark gradient results panel — calculator and conversion band */
+.dark-gradient-panel {
+  background: linear-gradient(145deg, oklch(0.20 0.06 250), oklch(0.22 0.05 210) 58%, oklch(0.30 0.08 185));
+  color: white;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark-gradient-panel::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  right: -90px;
+  top: -90px;
+  pointer-events: none;
+}
+
+/* Eyebrow label — teal uppercase */
+.eyebrow {
+  color: oklch(0.52 0.10 185);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 800;
+  font-size: 0.78rem;
+}
+
+/* Pain card top gradient bar */
+.pain-card-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, oklch(0.55 0.12 180), oklch(0.35 0.10 250));
+}
+
+/* Profile button active state — agent preview selector */
+.profile-button-active {
+  box-shadow:
+    inset 0 0 0 2px oklch(0.52 0.10 185 / 0.36),
+    0 18px 44px rgba(7, 26, 51, 0.10);
+}
+
+/* Telemetry slider customizations */
+.telemetry-slider [data-slot="slider-track"] {
+  height: 4px !important;
+  background-color: oklch(0.90 0.01 250) !important;
+}
+
+.telemetry-slider [data-slot="slider-range"] {
+  background-color: oklch(0.52 0.10 185) !important;
+}
+
+.telemetry-slider [data-slot="slider-thumb"] {
+  width: 10px !important;
+  height: 18px !important;
+  border-radius: 1px !important;
+  border: 1.5px solid oklch(0.52 0.10 185) !important;
+  background-color: white !important;
+  cursor: ew-resize !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+.telemetry-slider [data-slot="slider-thumb"]:hover,
+.telemetry-slider [data-slot="slider-thumb"]:focus {
+  background-color: oklch(0.52 0.10 185) !important;
+  box-shadow: 0 0 6px oklch(0.52 0.10 185 / 0.5) !important;
+}
+
+/* Results panel telemetry overlay */
+.results-telemetry-grid {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
 }

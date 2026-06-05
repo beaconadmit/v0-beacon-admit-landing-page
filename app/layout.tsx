@@ -1,14 +1,20 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Geist_Mono } from 'next/font/google'
+import { Outfit, Plus_Jakarta_Sans, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Script from 'next/script'
 import './globals.css'
 
-const inter = Inter({ 
+const outfit = Outfit({ 
   subsets: ["latin"],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-outfit',
+})
+
+const plusJakarta = Plus_Jakarta_Sans({ 
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-plus-jakarta',
 })
 
 const geistMono = Geist_Mono({ 
@@ -60,21 +66,61 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Beacon Admit",
-  applicationCategory: "HealthcareApplication",
-  description: "24/7 AI Admissions Coordinator for Behavioral Health facilities. Never miss a treatment inquiry after hours.",
-  url: "https://beaconadmit.com",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  operatingSystem: "Web",
-  creator: {
-    "@type": "Organization",
-    name: "Agile AI Lab",
-    url: "https://agileailab.org",
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "Beacon Admit",
+    applicationCategory: "HealthcareApplication",
+    description: "24/7 AI Admissions Coordinator for Behavioral Health facilities. Never miss a treatment inquiry after hours.",
+    url: "https://beaconadmit.com",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    operatingSystem: "Web",
+    creator: {
+      "@type": "Organization",
+      name: "Agile AI Lab",
+      url: "https://agileailab.org",
+    },
   },
-}
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Is Beacon Admit HIPAA compliant?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. All data is encrypted in transit and at rest. We sign BAAs with every facility and never store PHI beyond the minimum necessary for intake routing.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Does Beacon Admit replace human admissions staff?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. Beacon Admit handles after-hours and overflow calls, collects intake context, and attempts warm handoffs. Your admissions team remains in control of all admission decisions.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What types of facilities does Beacon Admit support?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Beacon Admit is built for detox, residential, PHP, IOP, outpatient, mental health, and dual-diagnosis programs.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How does the AI agent handle urgent or crisis calls?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Beacon Admit includes configurable escalation scripts. For urgent concerns, it follows your facility's protocols to route calls to on-call staff or emergency services immediately.",
+        },
+      },
+    ],
+  },
+]
 
 export default function RootLayout({
   children,
@@ -82,7 +128,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${geistMono.variable} bg-background`}>
+    <html lang="en" className={`${outfit.variable} ${plusJakarta.variable} ${geistMono.variable} bg-background`}>
       <head>
         <script
           type="application/ld+json"

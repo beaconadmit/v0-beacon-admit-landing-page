@@ -16,6 +16,12 @@ export interface Lead {
   website?: string | null
   facility: string | null
   facility_type: string | null
+  contact_name?: string | null
+  bed_count?: number | null
+  states_served?: string[] | null
+  current_after_hours?: string | null
+  insurance_accepted?: string[] | null
+  agree_to_contact?: boolean | null
   created_at: string
 }
 

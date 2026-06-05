@@ -8,15 +8,17 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
-  { href: "#problem", label: "Problem" },
-  { href: "#solution", label: "Solution" },
-  { href: "#how-it-works", label: "How It Works" },
-  { href: "#roi", label: "ROI Calculator" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#problem", label: "Problem" },
+  { href: "/#solution", label: "Solution" },
+  { href: "/#how-it-works", label: "How It Works" },
+  { href: "/#roi", label: "ROI Calculator" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/blog", label: "Blog" },
+  { href: "/#faq", label: "FAQ" },
 ]
 
 interface NavbarProps {
-  onTalkToAgent: () => void
+  onTalkToAgent?: () => void
 }
 
 export function Navbar({ onTalkToAgent }: NavbarProps) {
@@ -77,7 +79,7 @@ export function Navbar({ onTalkToAgent }: NavbarProps) {
             <Button 
               variant="ghost" 
               size="sm" 
-              onClick={onTalkToAgent} 
+              onClick={onTalkToAgent ?? (() => { window.location.href = '/#demo' })} 
               className="gap-2 text-primary hover:text-primary hover:bg-[oklch(0.28_0.08_250/0.15)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20"
             >
               <Phone className="w-4 h-4" />
@@ -116,7 +118,7 @@ export function Navbar({ onTalkToAgent }: NavbarProps) {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    onClick={() => { onTalkToAgent(); setMobileMenuOpen(false) }} 
+                    onClick={() => { (onTalkToAgent ?? (() => { window.location.href = '/#demo' }))(); setMobileMenuOpen(false) }} 
                     className="gap-2 w-full justify-center border-primary text-primary hover:bg-[oklch(0.28_0.08_250/0.15)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20"
                   >
                     <Phone className="w-4 h-4" />
